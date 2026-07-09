@@ -29,175 +29,136 @@ interface GPU {
     }
 }
 
+
 // --- CONCRETE PARTS ---
 class I9_14900K implements CPU {
-    private final String brand;
-    private final String model;
-
-    public I9_14900K() {
-        brand = "Intel";
-        model = "14th Gen Core i9-14900K";
-    }
-
-    public String brand() { return brand; }
-
-    public String model() { return model; }
+    public String brand() { return "Intel"; }
+    public String model() { return "Core i9-14900K"; }
 }
 
 class R5_7600 implements CPU {
-    private final String brand;
-    private final String model;
-
-    public R5_7600() {
-        brand = "AMD";
-        model = "Ryzen 7000 Series Ryzen 5 7600";
-    }
-
-    public String brand() { return brand; }
-
-    public String model() { return model; }
+    public String brand() { return "AMD"; }
+    public String model() { return "Ryzen 5 7600"; }
 }
 
 class Corsair32GB implements RAM {
-    private final String brand;
-    private final int size;
-    private final String generation;
-    private final String model;
-
-    public Corsair32GB() {
-        brand = "Corsair";
-        size = 32;
-        generation = "DDR5";
-        model = "Vengeance 4800MHz";
-    }
-
-    public String brand() { return brand; }
-
-    public int size() { return size; }
-
-    public String generation() { return generation; }
-
-    public String model() { return model; }
+    public String brand()      { return "Corsair"; }
+    public int size()          { return 32; }
+    public String generation() { return "DDR5"; }
+    public String model()      { return "Vengeance 4800MHz"; }
 }
 
 class Crucial8GB implements RAM {
-    private final String brand;
-    private final int size;
-    private final String generation;
-    private final String model;
-
-    public Crucial8GB() {
-        brand = "Crucial";
-        size = 8;
-        generation = "DDR4";
-        model = "Ballistix 3200MHz";
-    }
-
-    public String brand() { return brand; }
-
-    public int size() { return size; }
-
-    public String generation() { return generation; }
-
-    public String model() { return model; }
+    public String brand()      { return "Crucial"; }
+    public int size()          { return 8; }
+    public String generation() { return "DDR4"; }
+    public String model()      { return "Ballistix 3200MHz"; }
 }
 
 class RTX4090 implements GPU {
-    private final String brand;
-    private final int memorySize;
-    private final String model;
-
-    public RTX4090() {
-        brand = "Nvidia";
-        memorySize = 24;
-        model = "RTX 4090 GDDR6X";
-    }
-
-    public String brand() { return brand; }
-
-    public int memorySize() { return memorySize; }
-
-    public String model() { return model; }
+    public String brand()    { return "Nvidia"; }
+    public int memorySize()  { return 24; }
+    public String model()    { return "RTX 4090 GDDR6X"; }
 }
 
 
-class ComputerBuilder {
-    // Package-visible fields for the Computer class to read
-    CPU cpu;
-    RAM ram;
-    GPU graphicsCard = null; // Default value if omitted
-
-    public ComputerBuilder setCPU(CPU cpu) {
-        this.cpu = cpu;
-        return this; // Returns the builder instance for chaining
-    }
-
-    public ComputerBuilder setRAM(RAM ram) {
-        this.ram = ram;
-        return this;
-    }
-
-    public ComputerBuilder setGraphicsCard(GPU graphicsCard) {
-        this.graphicsCard = graphicsCard;
-        return this;
-    }
-
-    public boolean hasGraphicsCard() {
-        return this.graphicsCard != null;
-    }
-
-    // The final assembly step
-    public Computer build() {
-        // The builder is an excellent place to run validation logic before creation
-        if (this.cpu == null || this.ram == null) {
-            throw new IllegalStateException("Cannot build a computer without a CPU and RAM!");
-        }
-        return new Computer(this);
-    }
-}
-
-
+// --- PRODUCT with STATIC NESTED BUILDER ---
 class Computer {
+
+    // All fields are final — the product is fully immutable after build()
     private final CPU cpu;
     private final RAM ram;
-    private final GPU graphicsCard; // An optional flag to show Builder flexibility
+    private final GPU graphicsCard;
 
-    // Constructor accepts the builder to instantiate the product
-    public Computer(ComputerBuilder builder) {
-        cpu = builder.cpu;
-        ram = builder.ram;
-        graphicsCard = builder.graphicsCard;
+    // Private constructor: only the nested Builder can call this --> so that nobody can do this: new Computer(someBuilder)
+    private Computer(Builder builder) {
+        this.cpu          = builder.cpu;
+        this.ram          = builder.ram;
+        this.graphicsCard = builder.graphicsCard;
     }
 
     public void printSpecs() {
-        System.out.println("Computer Specs: " 
-            + cpu.getSpecs() + " | " 
-            + ram.getSpecs() + " | " 
-            + (graphicsCard != null ? graphicsCard.getSpecs() : "Integrated Graphics"));
+        String gpuSpec = (graphicsCard != null)
+            ? graphicsCard.getSpecs()
+            : "Integrated Graphics";
+
+        System.out.println("Computer Specs: "
+            + cpu.getSpecs() + " | "
+            + ram.getSpecs() + " | "
+            + gpuSpec);
+    }
+
+    // --- STATIC NESTED BUILDER ---
+    // Nested inside Computer so it can call the private constructor, but still completely separate from the product's own logic.
+    public static class Builder {
+
+        // Required fields — no defaults; validation enforces them in build()
+        private CPU cpu;
+        private RAM ram;
+
+        // Optional field — explicitly defaults to null (Integrated Graphics)
+        private GPU graphicsCard = null;
+
+        public Builder setCPU(CPU cpu) {
+            this.cpu = cpu;
+            return this;            // return Builder for method chaining
+        }
+
+        public Builder setRAM(RAM ram) {
+            this.ram = ram;
+            return this;
+        }
+
+        public Builder setGraphicsCard(GPU graphicsCard) {
+            this.graphicsCard = graphicsCard;
+            return this;
+        }
+
+        // Validation + construction in one controlled step
+        public Computer build() {
+            if (this.cpu == null || this.ram == null) {
+                throw new IllegalStateException(
+                    "Cannot build a Computer without a CPU and RAM!");
+            }
+            return new Computer(this);  // only place Computer() is ever called
+        }
     }
 }
 
+
+// --- DEMO ---
 public class PCBuilder {
     public static void main(String[] args) {
-        
-        // Configuration 1: A high-end developer rig (Intel CPU, Corsair RAM, No GPU)
-        Computer devRig = new ComputerBuilder()
+
+        // Configuration 1: High-end developer rig — no dedicated GPU
+        Computer devRig = new Computer.Builder()
             .setCPU(new I9_14900K())
             .setRAM(new Corsair32GB())
+            // setGraphicsCard() omitted → falls back to Integrated Graphics
             .build();
-        // devRig.setGraphicsCard(new RTX4090()) -> Omitted entirely, falls back to default
 
         devRig.printSpecs();
-        // Output: Computer Specs: Intel Core i9-14900K | 32GB Corsair Vengeance DDR5 | Integrated Graphics
+        // Output: Computer Specs: Intel Core i9-14900K | Corsair 32GB DDR5 Vengeance 4800MHz | Integrated Graphics
 
-        // Configuration 2: A budget gaming setup (AMD CPU, Crucial RAM, Dedicated GPU)
-        Computer budgetGamer = new ComputerBuilder()
+        // Configuration 2: Budget gaming setup — dedicated GPU included
+        Computer budgetGamer = new Computer.Builder()
             .setCPU(new R5_7600())
             .setRAM(new Crucial8GB())
             .setGraphicsCard(new RTX4090())
             .build();
 
         budgetGamer.printSpecs();
-        // Output: Computer Specs: AMD Ryzen 5 7600 | 8GB Crucial DDR4 | Dedicated GPU
+        // Output: Computer Specs: AMD Ryzen 5 7600 | Crucial 8GB DDR4 Ballistix 3200MHz | Nvidia RTX 4090 GDDR6X with 24GB VRAM
+
+        // Configuration 3: Demonstrating build() validation guard
+        try {
+            Computer broken = new Computer.Builder()
+                .setCPU(new I9_14900K())
+                // RAM intentionally omitted
+                .build();
+        } catch (IllegalStateException e) {
+            System.out.println("Caught: " + e.getMessage());
+            // Output: Caught: Cannot build a Computer without a CPU and RAM!
+        }
     }
 }

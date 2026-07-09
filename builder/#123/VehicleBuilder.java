@@ -20,7 +20,7 @@ interface IBuilder {
     Product GetVehicle();
 }
 
-// ConcreteBuilder 1: assembles a car step by step.
+// ConcreteBuilder 1: assembles a car step by step instead of all at once inside the Product class constructor.
 class Car implements IBuilder {
     private Product product = new Product();
     
