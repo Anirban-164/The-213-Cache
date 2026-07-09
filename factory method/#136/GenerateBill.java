@@ -6,7 +6,7 @@ abstract class Plan {
     public void calculateBill(int units) {
         System.out.println(units * rate);
     }
-} // end of Plan class.
+}
 
 // ২. Concrete Classes that extend Plan
 class DomesticPlan extends Plan {
@@ -14,14 +14,14 @@ class DomesticPlan extends Plan {
     public void getRate() {
         rate = 3.50;
     }
-} // end of DomesticPlan class.
+}
 
 class CommercialPlan extends Plan {
     // @override
     public void getRate() {
         rate = 7.50;
     }
-} // end of CommercialPlan class.
+}
 
 class InstitutionalPlan extends Plan {
     // @override

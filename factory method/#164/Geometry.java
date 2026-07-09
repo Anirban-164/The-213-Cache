@@ -11,34 +11,34 @@ Solution via factory method: define a 'transport' interface, and let each subcla
 /*
 // Version 1 — works, but not extensible
 public class Rectangle {
-    public double Width { get; set; }
-    public double Height { get; set; }
+    public double width;
+    public double height;
 }
 
 public class AreaCalculator {
-    public double Area(Rectangle[] shapes) {
+    public double area(Rectangle[] shapes) {
         double area = 0;
-        foreach (var shape in shapes)
-            area += shape.Width * shape.Height;
+        for (Rectangle shape : shapes)
+            area += shape.width * shape.height;
         return area;
     }
 }
 
 Version 2 — extended by modification (violates OCP)
-public double Area(object[] shapes) {
+public double area(Object[] shapes) {
     double area = 0;
-    foreach (var shape in shapes) {
-        if (shape is Rectangle) {
+    for (Object shape : shapes) {
+        if (shape instanceof Rectangle) {
             Rectangle rectangle = (Rectangle) shape;
-            area += rectangle.Width * rectangle.Height;
+            area += rectangle.width * rectangle.height;
         } else {
             Circle circle = (Circle) shape;
-            area += circle.Radius * circle.Radius * Math.PI;
+            area += circle.radius * circle.radius * Math.PI;
         }
     }
     return area;
 }
-*/ */
+*/
 
 // Step 1: Product interface
 interface Shape {
@@ -102,6 +102,13 @@ class ShapeFactory {
         return null;
     }
 }
+/*
+### Wait — isn't that if/else chain exactly what OCP told us to avoid?
+--> Yes. This is "simple factory" style (a single class with a string-driven if/else) is an extremely common, pragmatic variant. But it's not the textbook Factory Method pattern, which instead uses subclassing (a separate ConcreteCreator per product) so no if/else chain exists at all
+
+### Check Geometry2 for more details
+*/
+
 // Step 4: Client code
 public class Geometry{
     public static void main(String args[]){
