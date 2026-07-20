@@ -15,68 +15,100 @@ interface Checkbox {
 
 // Concrete Products for Windows
 class WinButton implements Button {
-    public void paint() { System.out.println("Windows Button"); }
+    public void paint() {
+        System.out.println("Windows Button");
+    }
 }
+
 class WinCheckbox implements Checkbox {
-    public void paint() { System.out.println("Windows Checkbox"); }
+    public void paint() {
+        System.out.println("Windows Checkbox");
+    }
 }
 
 // Concrete Products for Mac
 class MacButton implements Button {
-    public void paint() { System.out.println("Mac Button"); }
+    public void paint() {
+        System.out.println("Mac Button");
+    }
 }
+
 class MacCheckbox implements Checkbox {
-    public void paint() { System.out.println("Mac Checkbox"); }
+    public void paint() {
+        System.out.println("Mac Checkbox");
+    }
 }
 
 // Concrete Products for Linux
 class LinuxButton implements Button {
-    public void paint() { System.out.println("Linux Button"); }
-}
-class LinuxCheckbox implements Checkbox {
-    public void paint() { System.out.println("Linux Checkbox"); }
+    public void paint() {
+        System.out.println("Linux Button");
+    }
 }
 
-// Abstract Factory interface
+class LinuxCheckbox implements Checkbox {
+    public void paint() {
+        System.out.println("Linux Checkbox");
+    }
+}
+
+/////// Abstract Factory interface /////////
 interface GUIFactory {
     Button createButton();
+
     Checkbox createCheckbox();
 }
 
 // Concrete Factory for Windows
 class WinFactory implements GUIFactory {
-    public Button createButton()     { return new WinButton(); }
-    public Checkbox createCheckbox() { return new WinCheckbox(); }
+    public Button createButton() {
+        return new WinButton();
+    }
+
+    public Checkbox createCheckbox() {
+        return new WinCheckbox();
+    }
 }
+
 // Concrete Factory for Mac
 class MacFactory implements GUIFactory {
-    public Button createButton()     { return new MacButton(); }
-    public Checkbox createCheckbox() { return new MacCheckbox(); }
+    public Button createButton() {
+        return new MacButton();
+    }
+
+    public Checkbox createCheckbox() {
+        return new MacCheckbox();
+    }
 }
+
 // Concrete Factory for Linux
 class LinuxFactory implements GUIFactory {
-    public Button createButton()     { return new LinuxButton(); }
-    public Checkbox createCheckbox() { return new LinuxCheckbox(); }
+    public Button createButton() {
+        return new LinuxButton();
+    }
+
+    public Checkbox createCheckbox() {
+        return new LinuxCheckbox();
+    }
 }
 
 // Client — works with abstractions only
 class Application {
-    private GUIFactory factory;
+    // private GUIFactory factory;
     private Button button;
     private Checkbox checkbox;
 
     Application(GUIFactory factory) {
-        this.factory = factory;
-        button = factory.createButton();
-        checkbox = factory.createCheckbox();
+        // this.factory = factory;
+        this.button = factory.createButton();
+        this.checkbox = factory.createCheckbox();
     }
 
     void paint() {
-        button.paint(); 
+        button.paint();
         checkbox.paint();
     }
 }
-
 
 public class OSFactory {
     public static void main(String[] args) {
@@ -86,17 +118,14 @@ public class OSFactory {
 
         if (os.contains("win")) {
             factory = new WinFactory();
-        }
-        else if (os.contains("mac")) {
+        } else if (os.contains("mac")) {
             factory = new MacFactory();
-        }
-        else if (os.contains("linux")) {
+        } else if (os.contains("linux")) {
             factory = new LinuxFactory();
-        }
-        else {
+        } else {
             factory = new WinFactory(); // default
         }
-        
+
         Application app = new Application(factory);
         app.paint();
     }

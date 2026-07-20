@@ -8,26 +8,51 @@ import java.util.Scanner;
 // ==========================================
 interface Shape {
     void draw();
+
     double area();
 }
 
 class Circle implements Shape {
     private double radius;
-    public Circle(double radius) { this.radius = radius; }
-    public double area() { return Math.PI * radius * radius; }
-    public void draw() { System.out.println("Drawing Circle"); }
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    public double area() {
+        return Math.PI * radius * radius;
+    }
+
+    public void draw() {
+        System.out.println("Drawing Circle");
+    }
 }
 
 class Rectangle implements Shape {
     double width, height;
-    public Rectangle(double width, double height) { this.width = width; this.height = height; }
-    public double area() { return width * height; }
-    public void draw() { System.out.println("Drawing Rectangle"); }
+
+    public Rectangle(double width, double height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public double area() {
+        return width * height;
+    }
+
+    public void draw() {
+        System.out.println("Drawing Rectangle");
+    }
 }
 
 class Square extends Rectangle {
-    public Square(double side) { super(side, side); }
-    public void draw() { System.out.println("Drawing Square"); }
+    public Square(double side) {
+        super(side, side);
+    }
+
+    public void draw() {
+        System.out.println("Drawing Square");
+    }
 }
 
 // ==========================================
@@ -80,8 +105,9 @@ public class Geometry2 {
 
         ShapeFactory factory = null;
 
-        // The client resolves configuration/input once to pick the correct FACTORY, not the product directly.
-        switch(type) {
+        // The client resolves configuration/input once to pick the correct FACTORY, not
+        // the product directly.
+        switch (type) {
             case 1:
                 factory = new CircleFactory();
                 break;
@@ -94,11 +120,14 @@ public class Geometry2 {
             default:
                 System.out.println("Invalid choice");
         }
-        // note: this if-else or case at the factory level is acceptable, because it is only about picking the correct factory depending on user input, not about instantiating products directly. The product creation is still fully deferred to the concrete factories.
+        // note: this if-else or case at the factory level is acceptable, because it is
+        // only about picking the correct factory depending on user input, not about
+        // instantiating products directly. The product creation is still fully deferred
+        // to the concrete factories.
 
         // Execution happens abstractly without knowing what shape is being processed
         if (factory != null) {
-            factory.render(); 
+            factory.render();
         }
         cin.close();
     }
