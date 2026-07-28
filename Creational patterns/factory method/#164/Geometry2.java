@@ -1,14 +1,13 @@
 import java.util.Scanner;
 
 // Strict/ text-book-styled Factory Method pattern
-// What's differnt here? --> we will expand both the product and the creator hierarchies, instead of just the product hierarchy. So, the 
+// What's differnt here? --> we will expand both the product and the creator hierarchies, instead of just the product hierarchy.
 
-// ==========================================
+// =====================================================
 // STEP 1 & 2: Products (Remain unchanged)
-// ==========================================
+// =====================================================
 interface Shape {
     void draw();
-
     double area();
 }
 
@@ -55,9 +54,9 @@ class Square extends Rectangle {
     }
 }
 
-// ==========================================
+// =====================================================
 // STEP 3: TEXTBOOK FACTORY METHOD SETUP
-// ==========================================
+// =====================================================
 
 // The Creator Abstract Class
 abstract class ShapeFactory {
@@ -94,9 +93,9 @@ class SquareFactory extends ShapeFactory {
     }
 }
 
-// ==========================================
+// =====================================================
 // STEP 4: Client Code
-// ==========================================
+// =====================================================
 public class Geometry2 {
     public static void main(String args[]) {
         Scanner cin = new Scanner(System.in);

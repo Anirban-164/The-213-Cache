@@ -4,7 +4,7 @@ Moto: Provide an interface for creating families of related or dependent objects
 Scenario: Your furniture shop sells Victorian, Art Deco, and Modern styles. Each style has a Chair, Sofa, and CoffeeTable. If a customer orders Victorian, ALL items must be Victorian — a Modern sofa with a Victorian chair looks terrible! But an Abstract Factory ensures compatibility across a family.
 */
 
-// Product interfaces (could be a derived class hierarchy in a real-world scenario, ie. Features)
+// Product interfaces --> could be a derived class hierarchy in a real-world scenario, ie. Features (i.e look into the Shape interface in Geometry3.java)
 interface Button {
     void paint();
 }
@@ -55,7 +55,6 @@ class LinuxCheckbox implements Checkbox {
 /////// Abstract Factory interface /////////
 interface GUIFactory {
     Button createButton();
-
     Checkbox createCheckbox();
 }
 

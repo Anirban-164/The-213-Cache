@@ -85,6 +85,7 @@ class GenerateBill3 {
         System.out.println("Tax Amount: " + totalTax);
         System.out.println("Total Bill: " + finalAmount);
     }
+    // ^^^ code till this section could be separated into a different class (i.e. Look into Application Class in OSFactory.java)
 
     public static void main(String args[]) throws IOException {
         Scanner cin = new Scanner(System.in);

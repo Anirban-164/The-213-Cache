@@ -1,13 +1,12 @@
 import java.util.Scanner;
 // haven't put mistakenly, it's 'Abstract Factory' pattern, not 'Normal Factory' or 'Textbook Factory' pattern
 
-// ============================================================================
+// =====================================================
 // STEP 1: THE BASE INTERFACE & SPECIFIC PRODUCT SLOTS
-// ============================================================================
+// =====================================================
 // The ultimate root interface for ALL items in the system
 interface Shape {
     void draw();
-
     double area();
 }
 
@@ -21,9 +20,9 @@ interface Rectangle extends Shape {
 interface Square extends Shape {
 }
 
-// ============================================================================
+// =====================================================
 // STEP 2: CONCRETE PRODUCTS (Separated cleanly by style families)
-// ============================================================================
+// =====================================================
 
 // --- FAMILY 1: FLAT VARIANT ---
 class FlatCircle implements Circle {
@@ -102,9 +101,9 @@ class ThreeDSquare extends ThreeDRectangle implements Square {
     }
 }
 
-// ============================================================================
+// =====================================================
 // STEP 3: THE ABSTRACT FACTORY INTERFACE
-// ============================================================================
+// =====================================================
 interface ThemeFactory {
     Circle createCircle();
 
@@ -113,9 +112,9 @@ interface ThemeFactory {
     Square createSquare();
 }
 
-// ============================================================================
+// =====================================================
 // STEP 4: CONCRETE FACTORIES (One factory object per theme)
-// ============================================================================
+// =====================================================
 class FlatThemeFactory implements ThemeFactory {
     public Circle createCircle() {
         return new FlatCircle();
@@ -144,9 +143,9 @@ class ThreeDThemeFactory implements ThemeFactory {
     }
 }
 
-// ============================================================================
+// =====================================================
 // STEP 5: CLIENT CODE
-// ============================================================================
+// =====================================================
 public class Geometry3 {
     public static void main(String args[]) {
         Scanner cin = new Scanner(System.in);
