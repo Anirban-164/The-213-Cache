@@ -2,7 +2,7 @@ import java.util.*;
 
 /* 
 You are developing a banking application that requires a strict audit trail. Every transaction 
-(deposit, withdrawal, transfer) must be recorded in a single log file. 
+(deposit, withdrawal, transfer) must be ***recorded in a single log file.*** 
 To prevent file corruption and synchronization issues, it is critical that there is not more than one 
 instance of the Logger class running throughout the entire application. Any module trying to log 
 a message must access this single shared instance. If a second instance is attempted to be 
@@ -15,9 +15,8 @@ independent parts of your code.
 
 class Logger{
     private static Logger logger;
-    String name;
 
-    private  Logger(){
+    private Logger(){
         System.out.println("Logger created");
     }
 

@@ -48,7 +48,8 @@ class GetPlanFactory {
         }
         return null;
     }
-} 
+}
+
 public class GenerateBill {
     public static void main(String args[]) throws IOException {
         GetPlanFactory planFactory = new GetPlanFactory();

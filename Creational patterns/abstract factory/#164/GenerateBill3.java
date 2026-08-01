@@ -66,7 +66,7 @@ class UKBillingFactory implements BillingAccountFactory {
 // ==========================================
 // 3. CLIENT CODE
 // ==========================================
-class GenerateBill3 {
+public class GenerateBill3 {
     private Plan plan;
     private TaxCalculator taxCalculator;
 

@@ -84,7 +84,7 @@ class Bicycle {
             this.frame = frame.buildFrame();
             return this;
         }
-
+ 
         public Builder setGearSystem(GearSystem gearSystem) {
             this.gearSystem = gearSystem.addGears();
             return this;

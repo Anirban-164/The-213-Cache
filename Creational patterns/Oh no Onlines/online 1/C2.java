@@ -16,6 +16,7 @@ class GameConfig{
         System.out.println("GameConfig instance created.");
     }
 
+    // must be public + static --> so that it can be called from anywhere without creating an instance of GameConfig
     public static GameConfig getInstance() {
         if (instance == null) {
             instance = new GameConfig();

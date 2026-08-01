@@ -5,8 +5,9 @@ The agency offers two standard package types:
 1. Relaxation Package: Includes "Business Class Flight", "5-Star Resort", and "Spa 
 Treatment". 
 2. Adventure Package: Includes "Economy Flight", "Mountain Cabin", and "Hiking Tour". 
+
 Task: You need to construct the final HolidayPackage object. Since the construction process 
-involves multiple steps (selecting flight, selecting hotel, etc.), you must design a system that 
+involves ***multiple steps*** (selecting flight, selecting hotel, etc.), you must design a system that 
 separates the construction of the complex object from its representation. 
 ● You don't need to create separate classes for Flights or Hotels; use Strings to represent 
 them. 
@@ -67,7 +68,7 @@ class TravelPackage {
     private Hotel hotel;
     private DailyActivity activity;
 
-    public TravelPackage(Builder builder) {
+    private TravelPackage(Builder builder) {
         this.flight = builder.flight;
         this.hotel = builder.hotel;
         this.activity = builder.activity;
