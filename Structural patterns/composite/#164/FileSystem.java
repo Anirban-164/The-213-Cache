@@ -3,22 +3,22 @@ import java.util.*;
 // Component: The common interface for both files and directories (Safe approach --> interface includes only the methods wil be needed by both leaf and composites.)
 interface FileSystemComponent {
     // Core operations that both File and Directory must support
-    int getSize();
+    double getSize();
     void print(String indent); // 'indent' just for the visualisation of the hierarchy
 }
 
 // Leaf: Represents a file that cannot have children
 class File implements FileSystemComponent {
     private String name;
-    private int size;
+    private double size;
 
-    public File(String name, int size) {
+    public File(String name, double size) {
         this.name = name;
         this.size = size;
     }
 
     @Override
-    public int getSize() {
+    public double getSize() {
         return size;
     }
 
@@ -47,8 +47,8 @@ class Directory implements FileSystemComponent {
     }
 
     @Override
-    public int getSize() {
-        int totalSize = 0;
+    public double getSize() {
+        double totalSize = 0;
         // Recursively calculate the size of all components in this directory
         for (FileSystemComponent component : components) {
             totalSize += component.getSize();
