@@ -66,10 +66,10 @@ public class DuckSimulator {
         WildTurkey turkey = new WildTurkey();
 
         // Wrap Turkey in adapter so it looks like a Duck
-        Duck turkeyAdapter = new TurkeyAdapter(turkey);
+        Duck newTurkey = new TurkeyAdapter(turkey);
 
         testDuck(duck);          // real duck
-        testDuck(turkeyAdapter); // turkey pretending to be a duck!
+        testDuck(newTurkey); // turkey pretending to be a duck!
     }
 
     static void testDuck(Duck duck) {
