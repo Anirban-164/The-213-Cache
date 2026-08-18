@@ -78,3 +78,42 @@ public class NotificationSender{
         // Adding a ScheduledNotification? One new subclass — no Sender classes change.
     }
 }
+
+/*
+    # in real life scenario, could it be other way around? i.e. notification inside messageSender
+    --> yes it can
+
+    # But is it still Bridge?
+    --> Not exactly
+
+    # but why?
+    --> The key is: “What changes independently?”
+
+        Current design:-
+        You have 2 independent dimensions:
+        - urgency: normal / urgent
+        - channel: email / SMS / push
+        These are separate concerns, so Bridge is useful.
+
+        Think:
+        - “Normal” is a kind of notification behavior
+        - “Email” is a kind of delivery behavior
+        - they can be combined freely
+
+        Reversed design:-
+        Now imagine:
+        the sender is the real smart part
+        the notification is just a data object like:
+        - recipient
+        - message text
+        - priority flag
+        
+        Then the sender does all channel-specific work:
+        - EmailSender sends email
+        - SmsSender sends SMS
+        - PushSender sends push
+
+        This is more like:
+        “Here is a payload; send it through this channel”
+        not “This notification object uses a sender”
+*/
